@@ -1,0 +1,32 @@
+{
+  "name": "apimongo",
+  "version": "1.0.0",
+  "description": "Api to manage admin api",
+  "main": "api.js",
+  "scripts": {
+    "start": "set DEBUG=api,api:* & nodemon api.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yorman",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "mongodb": "^3.2.7",
+    "nodemon": "^1.19.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.0.1"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "env": {
+      "NODE_ENV": "development",
+      "PORT": 4000
+    }
+  }
+}
