@@ -4,7 +4,7 @@
   "description": "Api to manage admin api",
   "main": "api.js",
   "scripts": {
-    "start": "set DEBUG=api,api:* & nodemon api.js",
+    "start": "DEBUG=api,api:*, nodemon api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Yorman",

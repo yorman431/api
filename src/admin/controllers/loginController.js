@@ -2,9 +2,8 @@ const debug = require('debug')('api:loginController');
 const { MongoClient } = require('mongodb');
 
 function loginController(dbConfig) {
-  
-  function login (req, res) {
 
+  function login (req, res) {
     try{
       const user = req.body;
       debug(`${user.username}`);
@@ -13,10 +12,10 @@ function loginController(dbConfig) {
         if (!err) {
           const db = await client.db(dbConfig.db);
           const col = await db.collection('user');
-  
+
           const resp = await col.insertOne(user);
           await client.close();
-  
+
           if (resp){
             res.json(resp)
           }else{
@@ -25,7 +24,7 @@ function loginController(dbConfig) {
         } else {
           debug(err)
         }
-        
+
       })
     }catch (err){
       debug(err.stack);

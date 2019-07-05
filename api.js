@@ -6,8 +6,8 @@ const { MongoClient } = require('mongodb');
 let api = express();
 let port = process.env.PORT || 3000;
 const dbConfig = {
-  db: 'admin',
-  url: 'mongodb+srv://yorman431:cagg5kxz@yherrera-lqjam.mongodb.net/test?retryWrites=true&w=majority'
+  db: 'Cluster0',
+  url: 'mongodb+srv://yorman431:cagg5kxz@cluster0-lqjam.azure.mongodb.net/test?retryWrites=true&w=majority'
 }
 
 api.use(bodyParser.json());
