@@ -14,7 +14,7 @@ function loginController(dbConfig) {
           const col = await db.collection('user');
 
           const resp = await col.insertOne(user);
-          await client.close();
+          client.close();
 
           if (resp){
             res.json(resp)
@@ -24,8 +24,7 @@ function loginController(dbConfig) {
         } else {
           debug(err)
         }
-
-      })
+      });
     }catch (err){
       debug(err.stack);
     }
