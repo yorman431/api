@@ -11,6 +11,7 @@ function productController(dbConfig) {
         const db = await client.db(dbConfig.db);
         const col = await db.collection('product');
         let product = await col.find({}).toArray();
+        client.close();
 
         if (product) {
           res.json(product);
@@ -20,6 +21,29 @@ function productController(dbConfig) {
       }catch(err) {
         debug(err.stack);
       }
+    })();
+  }
+
+  function getOne (req, res) {
+    const client = new MongoClient(dbConfig.url, { useNewUrlParser: true });
+    const id = req.params.id;
+    (async () => {
+      try {
+        await client.connect();
+        const db = await client.db(dbConfig.db);
+        const col = await db.collection('product');
+        let r = await col.findOne({ _id:ObjectID(id) });
+        client.close();
+
+        if(r){
+          res.json(r)
+        }else{
+          res.json('No product detected');
+        }
+      }catch (err) {
+        debug(err.stack);
+      }
+
     })();
   }
 
@@ -39,7 +63,7 @@ function productController(dbConfig) {
         if(r.result.ok) {
           res.json(r.insertedId);
         } else {
-          res.json(`Error inserting a product`);
+          res.json(`Error inserting product`);
         }
       }catch (err) {
         debug(err.stack);
@@ -59,11 +83,11 @@ function productController(dbConfig) {
           const db = await client.db(dbConfig.db);
           const col = await db.collection('product');
           let r = await col.updateOne({_id: ObjectID(id)}, {$set: product});
-
           client.close();
 
           if (r.modifiedCount) {
-            res.json(`Product updated successfully. Items modified: ${r.modifiedCount}`);
+            debug(`Product updated successfully. Items modified: ${r.modifiedCount}`)
+            res.json(`ok`);
           } else {
             res.json(`Error updating product`);
           }
@@ -73,10 +97,32 @@ function productController(dbConfig) {
     })();
   }
 
+  function remove (req, res) {
+    const client = new MongoClient(dbConfig.url, { useNewUrlParser: true });
+    const id = req.params.id;
+    (async () => {
+      try{
+        await client.connect();
+        const db = await client.db(dbConfig.db);
+        const col = await db.collection('product');
+        let r = await col.deleteOne({ _id: ObjectID(id) });
+        client.close();
+
+        res.json('ok');
+        debug(`Product deleted ${r.deletedCount}`);
+
+      }catch (err) {
+        debug(err.debug);
+      }
+    })();
+  }
+
   return {
     get,
+    getOne,
     insert,
-    update
+    update,
+    remove
   };
 }
 module.exports = productController;

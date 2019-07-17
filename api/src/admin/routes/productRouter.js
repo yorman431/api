@@ -11,7 +11,9 @@ function router (dbConfig) {
     .post(productController.insert);
 
   productRouter.route('/:id')
-    .patch(productController.update);
+    .get(productController.getOne)
+    .patch(productController.update)
+    .delete(productController.remove);
 
   return productRouter;
 }

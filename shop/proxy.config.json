@@ -1,0 +1,10 @@
+{
+	"/api": {
+		"target": "https://4000-d7abf5d8-6a07-4813-93db-99a310b770e6.ws-us0.gitpod.io",
+		"secure": false,
+		"pathRewrite": {
+			"^/api": ""
+		},
+		"logLevel": "debug"
+	}
+}
